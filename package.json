@@ -1,6 +1,6 @@
 { 
   "scripts": {
-    "tslox": "node build/index.js"
+    "tslox": "node build/tslox.js"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
