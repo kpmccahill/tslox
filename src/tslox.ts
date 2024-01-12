@@ -8,6 +8,8 @@
 import * as fs from 'fs';
 import * as readLine from 'readline';
 
+import { Scanner } from './scanner';
+
 /**
  * Entry point for the lox interpreter
  * 
@@ -47,6 +49,15 @@ function runPrompt(){
 }
 
 function run (source: string) {
+    var scanner: Scanner = new Scanner(source);
+    var tokens = scanner.scanTokens();
+
+    for (var token in tokens) {
+        console.log(token);
+    }
+}
+
+function error(line: number, ) {
 
 }
 
