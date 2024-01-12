@@ -10,6 +10,8 @@ import * as readLine from 'readline';
 
 import { Scanner } from './scanner';
 
+var hadError = false;
+
 /**
  * Entry point for the lox interpreter
  * 
@@ -57,8 +59,13 @@ function run (source: string) {
     }
 }
 
-function error(line: number, ) {
+function error(line: number, message: string) {
+    report(line, "", message);
+}
 
+function report(line: number, where: string, message: string) {
+    console.log("[line " + line + "] Error" + where + ": " + message)
+    hadError = true;
 }
 
 main(process.argv.slice(2));
