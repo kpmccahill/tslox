@@ -9,7 +9,7 @@ export class Token {
     readonly literal: Object;
     readonly line: number;
 
-    constructor (type: TokenType, lexeme: string, literal: Object, line: number) {
+    constructor (type: TokenType, lexeme: string, literal: any | null, line: number) {
         this.type = type;
         this.lexeme = lexeme;
         this.literal = literal;

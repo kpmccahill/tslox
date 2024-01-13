@@ -9,8 +9,9 @@ import * as fs from 'fs';
 import * as readLine from 'readline';
 
 import { Scanner } from './scanner';
+import * as Error from './error'
 
-var hadError = false;
+// var hadError = false;
 
 /**
  * Entry point for the lox interpreter
@@ -36,7 +37,10 @@ function main(args: string[]) {
  */
 async function runFile(path: string){
     var file = await fs.readFileSync(path, 'utf-8');
-    console.log(file);
+    run(file);
+    if (Error.getHadError() === true){
+        process.exit(65);
+    }
 }
 
 function runPrompt(){
@@ -46,6 +50,7 @@ function runPrompt(){
     rl.on("line", (input) => {
         // console.log(input);
         run(input);
+        Error.setHadError(false);
         rl.prompt();
     }) // can prepend this maybe to show errors or something.
 }
@@ -65,7 +70,7 @@ function error(line: number, message: string) {
 
 function report(line: number, where: string, message: string) {
     console.log("[line " + line + "] Error" + where + ": " + message)
-    hadError = true;
+    Error.setHadError(true);
 }
 
 main(process.argv.slice(2));
