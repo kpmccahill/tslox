@@ -10,7 +10,7 @@ import * as readLine from 'readline';
 
 import { Scanner } from './scanner';
 import * as Error from './error'
-
+import { Token } from './token';
 // var hadError = false;
 
 /**
@@ -35,8 +35,8 @@ function main(args: string[]) {
  * 
  * @param path path to script file
  */
-async function runFile(path: string){
-    var file = await fs.readFileSync(path, 'utf-8');
+function runFile(path: string){
+    var file = fs.readFileSync(path, 'utf-8');
     run(file);
     if (Error.getHadError() === true){
         process.exit(65);
@@ -59,8 +59,8 @@ function run (source: string) {
     var scanner: Scanner = new Scanner(source);
     var tokens = scanner.scanTokens();
 
-    for (var token in tokens) {
-        console.log(token);
+    for (var i = 0; i < tokens.length; i++) {
+        console.log(tokens[i])
     }
 }
 
