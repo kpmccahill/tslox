@@ -18,6 +18,11 @@ export class Scanner {
         this.source = source
     }
 
+    /**
+     * scan all tokens in `this.source`
+     * 
+     * @returns Token[] - an array of tokens
+     */
     public scanTokens(): Array<Token> {
         while (!this.isAtEnd()) {
             this.start = this.current
@@ -26,7 +31,10 @@ export class Scanner {
         this.tokens.push(new Token(TokenType.EOF, "", null, this.line))
         return this.tokens
     }
-
+     
+    /**
+     * Scan the current token and advance one character
+     */
     private scanToken() {        
         var c = this.advance();
         switch(c) {
@@ -73,14 +81,30 @@ export class Scanner {
             default: {
                 if (this.isDigit(c)) {
                     this.number()
+                } else if (this.isAlpha(c)) {
+                    this.identifier()
                 } else {
                     Error.error(this.line, "Unexpected character.")
                 }
                 break;
             }
         }
-    }
-    
+    }   
+
+    /** 
+     * Add an identifier literal
+     */
+    private identifier() {
+        while(this.isAlphaNumeric(this.peek())) {
+            this.advance();
+        }
+
+        this.addToken(TokenType.IDENTIFIER)
+    }   
+
+    /**
+     * Adds a numeric literal.
+     */
     private number() {
         while (this.isDigit(this.peek())){
             this.advance();
@@ -121,6 +145,11 @@ export class Scanner {
 
     }
 
+    /**
+     * checks if the current character matches the passed in value
+     * @param expected string - expected value
+     * @returns boolean - true if matched.
+     */
     private match(expected: string): boolean {
         if (this.isAtEnd()) return false;
         if(this.source.charAt(this.current) != expected) return false;
@@ -151,23 +180,51 @@ export class Scanner {
         return this.source.charAt(this.current + 1);
     }
 
+    private isAlpha(c: string) {
+        return (c >= 'a' && c <= 'z') ||
+                (c >= 'A' && c <= 'Z')  ||
+                (c === '_')
+    }
+
+    private isAlphaNumeric(c: string) {
+        return (this.isAlpha(c)) || (this.isDigit(c))
+    }
+
     private isDigit(c: string): boolean {
         return c >= '0' && c <= '9'
     }
 
+    /**
+     * advance current by one and return the character under it.
+     * @returns string - the next character
+     */
     private advance(): string {
         return this.source.charAt(this.current++)
     }
 
+    /**
+     * adds a token without a literal
+     * 
+     * @param type TokenType
+     */
     private addToken(type: TokenType) {
         this.addTokenWithLiteral(type, null)
     }
 
+    /**
+     * adds a token with the passed in literal type (null or value)
+     * @param type TokenType
+     * @param literal either null or a literal value
+     */
     private addTokenWithLiteral(type: TokenType, literal: any | null) {
         var text: string = this.source.substring(this.start, this.current)
         this.tokens.push(new Token(type, text, literal, this.line))
     }
 
+    /**
+     * return true if at end of source file
+     * @returns boolean
+     */
     private isAtEnd(): boolean {
         return this.current >= this.source.length
     }
