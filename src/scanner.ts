@@ -111,7 +111,7 @@ export class Scanner {
     }   
 
     /** 
-     * Add an identifier literal
+     * Add an identifier
      */
     private identifier() {
         while(this.isAlphaNumeric(this.peek())) {
@@ -119,9 +119,10 @@ export class Scanner {
         }
 
         var text: string = this.source.substring(this.start, this.current)
+        console.log(text)
         var type = keywords.get(text)
         if (type == null) type = TokenType.IDENTIFIER;
-        this.addToken(TokenType.IDENTIFIER)
+        this.addToken(type)
     }   
 
     /**
