@@ -26,6 +26,7 @@ const keywords = new Map([
   ['while', TokenType.WHILE],
 ])
 
+// TODO: Add support for multiline C style comments /* -- */ maybe add nesting?
 export class Scanner {
     private readonly source: string
     private tokens: Token[] = new Array<Token>
