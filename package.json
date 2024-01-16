@@ -1,6 +1,7 @@
 { 
   "scripts": {
-    "tslox": "node build/tslox.js"
+    "tslox": "node build/tslox.js",
+    "generateast": "node build/generateast.js"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
