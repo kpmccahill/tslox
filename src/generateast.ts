@@ -55,7 +55,7 @@ function defineAst(outputDir: string, baseName: string, types: Array<string>): v
 
 function defineVisitor(baseName: string, types: string[]): string {
     let source = ""
-    source += "interface Visitor<T> {\n"
+    source += "export interface Visitor<T> {\n"
 
     for (var type in types) {
         let typeName = types[type].split(";")[0].trim()

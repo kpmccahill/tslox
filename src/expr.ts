@@ -5,7 +5,7 @@ export interface Expr {
     accept<T>(visitor: Visitor<T>): T;
 }
 
-interface Visitor<T> {
+export interface Visitor<T> {
     visitBinaryExpr(expr: Binary): T
     visitGroupingExpr(expr: Grouping): T
     visitLiteralExpr(expr: Literal): T
