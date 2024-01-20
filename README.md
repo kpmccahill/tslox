@@ -8,5 +8,5 @@ This is a typescript implementation of the tree walk interpreter from the book C
 
 ### Note on completion
 This implementation is still in progress and is incomplete. At the time of writing this, a basic parser is wired up. 
-However actual logical assignment has not been completed, so the language does not actually produce any code yet. However if you are interested you can see the underlying tree
-if a valid expression or statement has been passed in.
+Though, actual logical assignment has not been completed, so the language does not actually produce any code yet. 
+However, if you are interested, the parser print the underlying AST if a valid expression or statement has been passed in.
