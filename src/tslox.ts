@@ -11,6 +11,10 @@ import * as readLine from 'readline';
 import { Scanner } from './scanner';
 import * as Error from './error'
 import { Token } from './token';
+import { Parser } from './parser';
+import { Expr } from './expr';
+import { AstPrinter } from './astprinter';
+
 // var hadError = false;
 
 /**
@@ -58,10 +62,14 @@ function runPrompt(){
 function run (source: string) {
     var scanner: Scanner = new Scanner(source);
     var tokens = scanner.scanTokens();
+    var parser: Parser = new Parser(tokens)
+    var expression: Expr = parser.parse()
 
-    for (var i = 0; i < tokens.length; i++) {
-        console.log(tokens[i])
+    if (Error.getHadError()) {
+        return
     }
+
+    console.log(new AstPrinter().print(expression))
 }
 
 function error(line: number, message: string) {
