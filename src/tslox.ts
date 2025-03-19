@@ -8,8 +8,8 @@
 import * as fs from 'fs';
 import * as readLine from 'readline';
 
-import { Scanner } from './scanner';
 import * as Error from './error'
+import { Scanner } from './scanner';
 import { Token } from './token';
 import { Parser } from './parser';
 import { Expr } from './expr';
