@@ -21,7 +21,7 @@ export class Interpreter implements Expr.Visitor<Object> {
     }
 
     evaluate(expr: Expr.Expr): any{
-        return expr.accept()
+        return expr.accept(expr)
     }
 }
 
