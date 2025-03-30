@@ -1,26 +1,26 @@
-import * as Expr from './expr';
+import { Expr, Binary, Literal, Grouping, Unary } from './expr';
 import { TokenType } from './tokentype';
 
-export class Interpreter implements Expr.Visitor<Object> {
-    visitLiteralExpr(expr: Expr.Literal): Object {
+export class Interpreter implements Visitor<any> {
+    visitLiteralExpr(expr: Literal): Object {
         return expr.value
     }
 
-    visitGroupingExpr(expr: Expr.Grouping): Object {
+    visitGroupingExpr(expr: Grouping): any {
         return this.evaluate(expr.expression)
     }
 
-    visitUnaryExpr(expr: Expr.Unary): Object {
-        var right: Object = this.evaluate(expr.right)
+    visitUnaryExpr(expr: Unary): any {
+        var right = this.evaluate(expr.right)
         switch (expr.operator.type) {
             case TokenType.MINUS:
-                return expr.right.value as number;
+                return -right; // can probably get away with type casting here 
         }
 
         return Object(null);
     }
 
-    evaluate(expr: Expr.Expr): any{
+    evaluate(expr: Expr) {
         return expr.accept(expr)
     }
 }
